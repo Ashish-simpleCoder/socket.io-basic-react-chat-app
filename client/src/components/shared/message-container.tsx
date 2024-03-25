@@ -1,15 +1,15 @@
 import { For } from 'classic-react-components'
 import { RefObject, useState } from 'react'
 import { BiSend } from 'react-icons/bi'
+import { Msg } from 'src/App'
 
 export default function MessageContainer({
-   channel,
    msgs,
    handleSendMsg,
    msgContainerRef,
 }: {
    channel?: string
-   msgs: Array<{ msg: string; sender: string; current?: boolean }>
+   msgs: Array<Msg>
    handleSendMsg: (msg: string) => void
    msgContainerRef: RefObject<HTMLDivElement>
 }) {
@@ -20,12 +20,18 @@ export default function MessageContainer({
             <For data={msgs}>
                {(data, idx) => {
                   return (
-                     <div key={idx} className='flex px-4'>
+                     <div key={idx} className={`flex px-4 gap-2 ${data.current ? "flex-row" : "flex-row-reverse"}`}>
                         <div
-                           className={`msg-text bg-orange-100 px-3 py-1 rounded-lg ${data.current ? 'ml-auto bg-green-400' : 'mr-auto'}`}
+                           className={`msg-text bg-orange-100 px-3 py-1 rounded-lg ${data.current ? 'ml-auto' : 'mr-auto'}`}
                         >
                            <p>{data.msg}</p>
                         </div>
+                           <div
+                              className={'avatar-box h-8 w-8 rounded-full flex items-center justify-center'}
+                              style={{ backgroundColor: data.AvatarClr }}
+                           >
+                              {data.sender[0]}
+                           </div>
                      </div>
                   )
                }}

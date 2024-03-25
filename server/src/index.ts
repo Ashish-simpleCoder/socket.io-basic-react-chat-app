@@ -42,11 +42,11 @@ io.on("connection",(socket)=>{
       console.log("socket disconnect")
    })
 
-   socket.on("join_room",(data:{room: string, username: string})=>{
+   socket.on("join_room",(data:{room: string, username: string, AvatarClr?: string})=>{
       socket.join(data.room)
       socket.emit("join_successful",data.room + " Channel joined successfully")
       socket.on("send_msg",(msg)=>{
-         socket.broadcast.emit("recieve_msg",{msg, sender: data.username})
+         socket.broadcast.emit("recieve_msg",{msg, sender: data.username, AvatarClr:data.AvatarClr})
       })
 
 

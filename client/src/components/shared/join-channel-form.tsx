@@ -1,12 +1,15 @@
-import { FormEvent, useState } from 'react'
+import { Dispatch, FormEvent, SetStateAction, useState } from 'react'
 
 export default function JoinChannelForm({
    handleChannelJoin,
+   username,
+   setUsername,
 }: {
    handleChannelJoin: ({ room, username }: { room: string; username: string }) => void
+   username: string
+   setUsername: Dispatch<SetStateAction<string>>
 }) {
    const [room, setRoom] = useState('react')
-   const [username, setUsername] = useState('Asis')
    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault()
       handleChannelJoin({ room, username })
