@@ -2,6 +2,10 @@ import { For } from 'classic-react-components'
 import { RefObject, useState } from 'react'
 import { BiSend } from 'react-icons/bi'
 import { Msg } from 'src/App'
+import relativeTime from 'dayjs/plugin/relativeTime'
+import dayjs from 'dayjs'
+
+dayjs.extend(relativeTime)
 
 export default function MessageContainer({
    msgs,
@@ -20,18 +24,21 @@ export default function MessageContainer({
             <For data={msgs}>
                {(data, idx) => {
                   return (
-                     <div key={idx} className={`flex px-4 gap-2 ${data.current ? "flex-row" : "flex-row-reverse"}`}>
-                        <div
-                           className={`msg-text bg-orange-100 px-3 py-1 rounded-lg ${data.current ? 'ml-auto' : 'mr-auto'}`}
-                        >
-                           <p>{data.msg}</p>
-                        </div>
+                     <div className='chat-msg'>
+                        <p className='date mb-2 text-center'>{dayjs(new Date(data.timestamp)).fromNow()}</p>
+                        <div key={idx} className={`flex px-4 gap-2 ${data.current ? 'flex-row' : 'flex-row-reverse'}`}>
+                           <div
+                              className={`msg-text bg-orange-100 px-3 py-1 rounded-lg ${data.current ? 'ml-auto' : 'mr-auto'}`}
+                           >
+                              <p>{data.msg}</p>
+                           </div>
                            <div
                               className={'avatar-box h-8 w-8 rounded-full flex items-center justify-center'}
                               style={{ backgroundColor: data.AvatarClr }}
                            >
                               {data.sender[0]}
                            </div>
+                        </div>
                      </div>
                   )
                }}

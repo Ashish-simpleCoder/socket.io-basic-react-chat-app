@@ -7,12 +7,14 @@ import { toast } from 'sonner'
 import JoinChannelForm from './components/shared/join-channel-form'
 import MessageContainer from './components/shared/message-container'
 
-export type Msg = { msg: string; sender: string; current?: boolean; AvatarClr: string }
+export type Msg = { msg: string; sender: string; current?: boolean; AvatarClr: string; timestamp: number }
 
 export default function App() {
    const socket = useRef(io('http://localhost:3000'))
-   const [isJoined, setIsJoined] = useState(false)
-   const [msgs, setMsgs] = useState<Array<Msg>>([])
+   const [isJoined, setIsJoined] = useState(true)
+   const [msgs, setMsgs] = useState<Array<Msg>>([
+      { AvatarClr: 'red', msg: 'awesome', sender: 'a', timestamp: 1711507734302 },
+   ])
    const msgContainerRef = useRef<ElementRef<'div'>>(null)
    const [username, setUsername] = useState('Asis')
    const AvatarClr = useMemo(() => '#' + Math.random().toString(16).slice(-6), [])
@@ -24,7 +26,7 @@ export default function App() {
       socket.current.emit('send_msg', msg)
       flushSync(() => {
          setMsgs((old_msgs) => {
-            old_msgs.push({ msg, sender: username, current: true, AvatarClr })
+            old_msgs.push({ msg, sender: username, current: true, AvatarClr, timestamp: Date.now() })
             return [...old_msgs]
          })
       })
