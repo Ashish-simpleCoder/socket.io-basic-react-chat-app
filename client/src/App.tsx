@@ -11,10 +11,8 @@ export type Msg = { msg: string; sender: string; current?: boolean; AvatarClr: s
 
 export default function App() {
    const socket = useRef(io('http://localhost:3000'))
-   const [isJoined, setIsJoined] = useState(true)
-   const [msgs, setMsgs] = useState<Array<Msg>>([
-      { AvatarClr: 'red', msg: 'awesome', sender: 'a', timestamp: 1711507734302 },
-   ])
+   const [isJoined, setIsJoined] = useState(false)
+   const [msgs, setMsgs] = useState<Array<Msg>>([])
    const msgContainerRef = useRef<ElementRef<'div'>>(null)
    const [username, setUsername] = useState('Asis')
    const AvatarClr = useMemo(() => '#' + Math.random().toString(16).slice(-6), [])
